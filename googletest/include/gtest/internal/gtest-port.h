@@ -2070,7 +2070,7 @@ GTEST_DISABLE_MSC_DEPRECATED_PUSH_()
 
 #if !GTEST_OS_WINDOWS_MOBILE && !GTEST_OS_WINDOWS_PHONE && \
     !GTEST_OS_WINDOWS_RT && !GTEST_OS_ESP8266 && !GTEST_OS_XTENSA
-inline int ChDir(const char* dir) { return chdir(dir); }
+inline int ChDir(const char* dir) { return _chdir(dir); }
 #endif
 inline FILE* FOpen(const char* path, const char* mode) {
 #if GTEST_OS_WINDOWS && !GTEST_OS_WINDOWS_MINGW
@@ -2087,17 +2087,17 @@ inline FILE* FOpen(const char* path, const char* mode) {
 inline FILE *FReopen(const char* path, const char* mode, FILE* stream) {
   return freopen(path, mode, stream);
 }
-inline FILE* FDOpen(int fd, const char* mode) { return fdopen(fd, mode); }
+inline FILE* FDOpen(int fd, const char* mode) { return _fdopen(fd, mode); }
 #endif
 inline int FClose(FILE* fp) { return fclose(fp); }
 #if !GTEST_OS_WINDOWS_MOBILE
 inline int Read(int fd, void* buf, unsigned int count) {
-  return static_cast<int>(read(fd, buf, count));
+  return static_cast<int>(_read(fd, buf, count));
 }
 inline int Write(int fd, const void* buf, unsigned int count) {
-  return static_cast<int>(write(fd, buf, count));
+  return static_cast<int>(_write(fd, buf, count));
 }
-inline int Close(int fd) { return close(fd); }
+inline int Close(int fd) { return _close(fd); }
 inline const char* StrError(int errnum) { return strerror(errnum); }
 #endif
 inline const char* GetEnv(const char* name) {
